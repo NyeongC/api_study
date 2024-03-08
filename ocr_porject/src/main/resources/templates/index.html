@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Upload Example</title>
+</head>
+<body>
+
+<!-- 이미지 불러오기 -->
+<img src="/path/to/your/image.jpg" alt="Image">
+
+<!-- 이미지 업로드 폼 -->
+<form id="imageUploadForm" enctype="multipart/form-data">
+    <input type="file" name="imageFile" id="imageFile" accept="image/jpeg, image/png">
+    <button type="button" onclick="uploadImage()">Upload Image</button>
+</form>
+
+<script>
+    function uploadImage() {
+        var formData = new FormData();
+        var fileInput = document.getElementById('imageFile');
+        var file = fileInput.files[0];
+        formData.append('imageFile', file);
+
+        fetch('/test', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Image upload response:', data);
+                // Handle the response as needed
+            })
+            .catch(error => {
+                console.error('Error uploading image:', error);
+            });
+    }
+</script>
+
+</body>
+</html>
